@@ -20,11 +20,13 @@ plt.savefig('Left impulse response.png')
 plt.show()
 plt.close()
 
+hR_path = "hR.txt"
 f = open("hR.txt", "r")
 lines = f.readlines()
 hR_data = []
 for l in lines:
     hR_data.append(float(l))
+f.close()
 
 n = np.arange(0,len(hR_data),1)
 
@@ -41,7 +43,14 @@ f = open("YL.txt", "r")
 lines = f.readlines()
 YL_data = []
 for l in lines:
-    YL_data.append(20 * math.log(abs(float(l)),10))
+    value = float(l)
+    if value > 0:
+        YL_data.append(20 * math.log(value, 10))
+    else:
+        # Handle the case when value <= 0 (avoid math domain error)
+        YL_data.append(0)
+
+f.close()
 
 n = np.arange(0,len(YL_data),1)
 
@@ -59,7 +68,13 @@ f = open("YR.txt", "r")
 lines = f.readlines()
 YR_data = []
 for l in lines:
-    YR_data.append(20 * math.log(abs(float(l)),10))
+    value = float(l)
+    if value > 0:
+        YR_data.append(20 * math.log(value, 10))
+    else:
+        # Handle the case when value <= 0 (avoid math domain error)
+        YR_data.append(0)
+f.close()
 
 n = np.arange(0,len(YR_data),1)
 
