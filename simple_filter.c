@@ -148,8 +148,15 @@ int main(int argc, char **argv)
 	M = atoi(argv[1]);
 	wav wavin;
 	wav wavout;
-	float h_L[2*M+1] = {0};
-  float h_R[2*M+1] = {0};
+    float h_L[2*M+1];
+    float h_R[2*M+1];
+
+    // 初始化
+    for (int i = 0; i < 2*M+1; ++i) {
+        h_L[i] = 0.0;
+        h_R[i] = 0.0;
+    }
+
 	int n = 0;
 	float y = 0;
 	int k;
@@ -222,8 +229,8 @@ int main(int argc, char **argv)
 		}
 		wavout.RChannel[n] = (short)(roundf(y));
 		if(n>=START_SAMPLE&&n<=END_SAMPLE){
-			fprintf(file_YL, "%24.16e\n", wavout.LChannel[n]);
-			fprintf(file_YR, "%24.16e\n", wavout.RChannel[n]);
+			fprintf(file_YL, "%24.16hd\n", wavout.LChannel[n]);
+			fprintf(file_YR, "%24.16hd\n", wavout.RChannel[n]);
 		}
 	}
 	memcpy(wavout.header, wavin.header, 44);
